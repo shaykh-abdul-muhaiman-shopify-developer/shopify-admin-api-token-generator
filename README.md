@@ -1,4 +1,4 @@
-# Shopify Admin API Token Generator
+# Shopify Admin API Token Generator — Custom App OAuth Tool
 
 **Get your own Shopify custom app's Admin API access token without building an OAuth backend from scratch.**
 
@@ -6,11 +6,31 @@ Enter your store domain, Client ID, and Client Secret, complete Shopify authoriz
 
 ### [Open Shopify Token Generator →](https://shopify-token-tool-kohl.vercel.app)
 
-[Setup guide](docs/SETUP.md) · [Frequently asked questions](docs/FAQ.md) · [Security & privacy](SECURITY.md)
+[Setup guide](docs/SETUP.md) · [FAQs by category](docs/FAQ.md) · [API usage examples](docs/USAGE.md) · [Security & privacy](SECURITY.md)
+
+**Did this tool save you an OAuth setup? Give the repository a ⭐ using GitHub's Star button.** It helps other Shopify developers discover the project. Starring is optional; it never changes access to the tool.
 
 Built with Next.js by [Shaykh Abdul Muhaiman](https://github.com/shaykh-abdul-muhaiman-shopify-developer).
 
 > Independent developer tool. Not affiliated with or endorsed by Shopify. The hosted tool is under active development. This repository currently contains its user documentation; the application source has not yet been published here.
+
+## Find what you need
+
+- [Why use the tool?](#why-use-this-shopify-token-generator)
+- [Who is it for?](#who-is-it-for)
+- [Get a Shopify Admin API access token](#quick-start)
+- [Security protections](#security-protections-explained)
+- [Token expiry and offline access](#does-the-token-expire-after-24-hours)
+- [Troubleshooting](#troubleshooting)
+- [Support the project](#support-the-project)
+
+## Common integration use cases
+
+An authorized Admin API token can be used by your own backend for product tools, catalog synchronization, inventory integrations, reporting, and custom automations, subject to its granted permissions.
+
+For example, an auto-restock application needs its own business logic, inventory permissions, scheduling, and token lifecycle handling. This website supplies a token; it does not build or operate the restock integration.
+
+[See a read-only GraphQL token test and permissions query →](docs/USAGE.md)
 
 ## Why use this Shopify token generator?
 
@@ -101,6 +121,26 @@ A non-expiring offline token has no scheduled time expiry, but uninstall, revoca
 
 **[Read token and permissions FAQs →](docs/FAQ.md)**
 
+## Security protections explained
+
+These controls are implemented in the development code. They reduce specific risks; they are not a claim that the hosted service is risk-free or independently certified.
+
+| Protection | What it does |
+| --- | --- |
+| HTTPS endpoint | Encrypts browser-to-service transport when a valid HTTPS connection is used |
+| POST form submission | Keeps entered credentials out of the form submission URL |
+| AES-256-GCM session encryption | Protects temporary OAuth session contents against reading and tampering without the server key |
+| HTTP-only cookie | Prevents ordinary page JavaScript from reading the OAuth cookie |
+| Secure production cookie | Restricts that cookie to HTTPS connections |
+| SameSite=Lax and Origin check | Add protections around cross-site request handling |
+| Browser-bound OAuth state | Links the callback to the browser session that started authorization |
+| Shopify HMAC check | Verifies the callback signature against the entered app secret |
+| Store and timestamp checks | Reject mismatched stores and callbacks outside the accepted time window |
+| Session cleanup and no-store headers | Clear the OAuth cookie and tell compliant caches not to retain the response |
+| Result-page Content Security Policy | Restricts scripts, resources, and framing on the token result page |
+
+The Client Secret is still processed by the hosted backend. Encryption does not make an untrusted operator trustworthy. Never submit secrets to a service you do not trust.
+
 ## Trust and credential handling
 
 Using a hosted helper means trusting its operator with your Client Secret during authorization. HTTPS protects transport; it does not remove that trust requirement.
@@ -144,6 +184,19 @@ This is a token-acquisition helper. It does not run your integration, perform au
 - [Access tokens](https://shopify.dev/docs/apps/build/authentication-authorization/access-tokens)
 - [Manage access scopes](https://shopify.dev/docs/apps/build/authentication-authorization/manage-access-scopes)
 - [Select a distribution method](https://shopify.dev/docs/apps/launch/distribution/select-distribution-method)
+
+## Support the project
+
+If this Shopify custom app token generator helped you:
+
+1. **Star this repository** to bookmark it and show support.
+2. Share the repository link with developers who need this workflow.
+3. Report a reproducible issue with all credentials redacted.
+4. Suggest a missing FAQ, clearer setup step, or compatibility test.
+
+Stars are voluntary. No token access, support entitlement, or feature is conditional on starring. This project does not buy stars or claim unverified adoption numbers.
+
+Documentation improvements are welcome through pull requests. See [contribution guidance](CONTRIBUTING.md).
 
 ## Support
 
