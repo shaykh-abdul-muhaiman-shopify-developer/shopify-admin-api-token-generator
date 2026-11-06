@@ -1,6 +1,6 @@
 # Shopify custom app setup
 
-[Open the tool](https://shopify-token-tool-kohl.vercel.app) · [Back to README](../README.md)
+[Open the tool](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator) · [Back to README](../README.md)
 
 ## Before you begin
 
@@ -21,13 +21,13 @@ A matching write scope includes read access. Some scopes also require additional
 App URL:
 
 ```text
-https://shopify-token-tool-kohl.vercel.app
+https://shaykhabdulmuhaiman.com/tools/shopify-token-generator
 ```
 
 Allowed redirection URL:
 
 ```text
-https://shopify-token-tool-kohl.vercel.app/api/auth/callback
+https://shaykhabdulmuhaiman.com/api/tools/shopify-token/callback
 ```
 
 Disable embedding in Shopify admin for this standalone test. Release the app version after saving the configuration.
@@ -60,7 +60,7 @@ Click **Connect Shopify**. Complete Shopify authorization if prompted. Keep the 
 
 ## 7. Save the result
 
-Copy the access token. Review the granted scopes and expiry information. If Shopify returns a refresh token, keep that private too.
+Copy the access token. Review the granted scopes and expiry information. The on-site result does not display a refresh token; manage any required renewal in your integration.
 
 Save credentials in your own trusted backend's secret configuration. Do not expose an Admin API token in storefront code.
 
@@ -74,6 +74,10 @@ Your backend must handle future OAuth callbacks and any required token renewal. 
 
 ## Current limitation
 
-The hosted tool currently includes `read_products` in its authorization request. Shopify-managed installation can grant released and approved app configuration scopes. Always inspect the result; do not assume all configured permissions have been granted.
+The on-site tool uses configured permissions where supported. If your flow needs an explicit scope list, use **Advanced permissions** and enter the scopes configured for your app. Always inspect the result; do not assume all configured permissions have been granted.
 
 See [Shopify's standalone authentication guide](https://shopify.dev/docs/apps/build/authentication-authorization/authenticate-standalone-apps) and [distribution guide](https://shopify.dev/docs/apps/launch/distribution/select-distribution-method).
+
+## Moving from the original hosted tool
+
+The main tool is now [https://shaykhabdulmuhaiman.com/tools/shopify-token-generator](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator). Add the new callback `https://shaykhabdulmuhaiman.com/api/tools/shopify-token/callback` to your Shopify app and save/release the configuration before connecting. The existing `https://shopify-token-tool-kohl.vercel.app/api/auth/callback` entry can remain for compatibility with the original tool; it is not the callback for the new website.

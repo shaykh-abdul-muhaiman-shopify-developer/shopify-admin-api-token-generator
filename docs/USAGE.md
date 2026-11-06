@@ -1,6 +1,6 @@
 # Test a Shopify Admin API token
 
-[Open Token Generator](https://shopify-token-tool-kohl.vercel.app) · [Setup](SETUP.md) · [FAQ](FAQ.md) · [README](../README.md)
+[Open Token Generator](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator) · [Setup](SETUP.md) · [FAQ](FAQ.md) · [README](../README.md)
 
 Successful OAuth means Shopify returned a token. Verify a read-only API request before relying on it in an integration. This guide does not require a product write or inventory change.
 

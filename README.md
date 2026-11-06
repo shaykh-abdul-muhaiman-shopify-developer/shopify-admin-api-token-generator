@@ -4,7 +4,7 @@
 
 Enter your store domain, Client ID, and Client Secret, complete Shopify authorization, and copy your token. Review the exact granted permissions on the result page.
 
-### [Open Shopify Token Generator →](https://shopify-token-tool-kohl.vercel.app)
+### [Open Shopify Token Generator →](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator)
 
 [Setup guide](docs/SETUP.md) · [FAQs by category](docs/FAQ.md) · [API usage examples](docs/USAGE.md) · [Security & privacy](SECURITY.md)
 
@@ -66,8 +66,8 @@ Create your app in the Shopify Dev Dashboard, select the required API scopes, an
 
 | Shopify setting | Value |
 | --- | --- |
-| App URL | `https://shopify-token-tool-kohl.vercel.app` |
-| Allowed redirection URL | `https://shopify-token-tool-kohl.vercel.app/api/auth/callback` |
+| App URL | `https://shaykhabdulmuhaiman.com/tools/shopify-token-generator` |
+| Allowed redirection URL | `https://shaykhabdulmuhaiman.com/api/tools/shopify-token/callback` |
 
 Use standalone app behavior for this flow. Release your configuration, configure distribution where required, and install the app using Shopify's generated install link where applicable.
 
@@ -75,7 +75,7 @@ Use standalone app behavior for this flow. Release your configuration, configure
 
 ### 2. Enter three values
 
-Open the [hosted token generator](https://shopify-token-tool-kohl.vercel.app).
+Open the [hosted token generator](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator).
 
 | Field | What to enter |
 | --- | --- |
@@ -97,15 +97,14 @@ Use **Copy Token** and save it securely. The token belongs to **your app's insta
 - A copyable Admin API access token.
 - Granted access scopes, each shown as a separate list item.
 - Token expiry information when returned by Shopify.
-- A refresh token when returned by Shopify.
 
-The tool queries `currentAppInstallation.accessScopes` for the installation's granted permissions. If that lookup is unavailable, it shows the token exchange's scope list with a fallback notice.
+The on-site tool displays the granted scope list returned by Shopify during the token exchange.
 
 A matching write scope includes read access: for example, `write_products` grants product read and write access.
 
 ## Current scope behavior
 
-The current authorization request includes `read_products`. Shopify-managed installation can grant scopes from the app's released and approved configuration.
+The on-site tool uses your app's configured permissions where supported. For flows requiring explicit scopes, open **Advanced permissions** and enter the comma-separated scopes configured for your app. It does not add `read_products` automatically.
 
 The result list reports what Shopify actually granted. It does not grant additional permissions, guarantee every configured scope is approved, or bypass protected-data requirements.
 
@@ -137,7 +136,6 @@ These controls are implemented in the development code. They reduce specific ris
 | Shopify HMAC check | Verifies the callback signature against the entered app secret |
 | Store and timestamp checks | Reject mismatched stores and callbacks outside the accepted time window |
 | Session cleanup and no-store headers | Clear the OAuth cookie and tell compliant caches not to retain the response |
-| Result-page Content Security Policy | Restricts scripts, resources, and framing on the token result page |
 
 The Client Secret is still processed by the hosted backend. Encryption does not make an untrusted operator trustworthy. Never submit secrets to a service you do not trust.
 
@@ -159,6 +157,7 @@ Never paste Admin API tokens into theme code, public JavaScript, GitHub issues, 
 | --- | --- |
 | Distribution method required | Configure distribution if required for this app's organization. |
 | Installation link invalid | Use Shopify's current generated install link for the intended store. |
+| Redirect URI is not whitelisted | Add the new callback URL shown above to Allowed redirection URLs, save and release the app configuration, then connect again. |
 | Callback returns 404 | Check that the registered callback matches the deployed route exactly. |
 | Session missing or expired | Start again from the homepage in the same browser. |
 | Signature verification failed | Verify the Client Secret and begin a fresh connection. |
@@ -205,3 +204,7 @@ Found a problem? [Open an issue](https://github.com/shaykh-abdul-muhaiman-shopif
 Include reproduction steps and a redacted error message. **Never include a Client Secret, access token, refresh token, authorization code, or complete callback URL.**
 
 Created by [Shaykh Abdul Muhaiman](https://github.com/shaykh-abdul-muhaiman-shopify-developer) · Shopify development and custom integrations.
+
+## Moving from the original hosted tool
+
+The main tool is now [https://shaykhabdulmuhaiman.com/tools/shopify-token-generator](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator). Add the new callback `https://shaykhabdulmuhaiman.com/api/tools/shopify-token/callback` to your Shopify app and save/release the configuration before connecting. The existing `https://shopify-token-tool-kohl.vercel.app/api/auth/callback` entry can remain for compatibility with the original tool; it is not the callback for the new website.

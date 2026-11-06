@@ -1,6 +1,6 @@
 # Shopify Admin API Token Generator FAQ
 
-[Open Token Generator](https://shopify-token-tool-kohl.vercel.app) · [Setup guide](SETUP.md) · [API examples](USAGE.md) · [Security](../SECURITY.md) · [README](../README.md)
+[Open Token Generator](https://shaykhabdulmuhaiman.com/tools/shopify-token-generator) · [Setup guide](SETUP.md) · [API examples](USAGE.md) · [Security](../SECURITY.md) · [README](../README.md)
 
 Answers about Shopify custom apps, OAuth tokens, scopes, privacy, installation and API testing.
 
@@ -102,7 +102,7 @@ The matching write scope includes read access. Shopify may omit the separate rea
 
 ### Where does the permission list come from?
 
-The tool queries the current installation's granted access scopes. If unavailable, it shows the token exchange's scope list with a notice.
+The on-site tool displays the granted scope list returned by Shopify in the token exchange response.
 
 ### Does the list reproduce my dashboard configuration?
 
@@ -114,11 +114,11 @@ No. Shopify is the authority for granted permissions. Protected-data requirement
 
 ### Will this work with every possible scope?
 
-No universal compatibility claim is made. Shopify controls approval and the current request includes read_products. Other configurations need testing; protected data can require additional approval.
+No universal compatibility claim is made. Shopify controls approval. Use Advanced permissions if your flow requires explicit scopes; protected data can require additional approval.
 
 ### Does it collect product, customer or order records?
 
-The shown callback implementation exchanges credentials and queries installation scope handles; it does not query those business records. A granted token can still authorize sensitive access, so limit scopes appropriately.
+The on-site callback exchanges the authorization code for a token and reads the returned scope list; it does not query those business records. A granted token can still authorize sensitive access, so limit scopes appropriately.
 
 ### How do I add inventory or orders permissions?
 
@@ -176,6 +176,10 @@ Local rendering can be tested, but the registered callback and cookie session mu
 
 ## Installation errors and support
 
+### Why does Shopify say the redirect URI is not whitelisted?
+
+Add `https://shaykhabdulmuhaiman.com/api/tools/shopify-token/callback` to the same Shopify app’s Allowed redirection URLs. Save and release its configuration, then start a fresh connection from the on-site tool. A callback registered only for the older Vercel tool does not cover the new website.
+
 ### Why does installation say the link is invalid?
 
 Use the current complete install link generated in Shopify's custom distribution settings for the intended store. Check that the domain and app match.
@@ -188,9 +192,9 @@ The helper's temporary OAuth session lasts ten minutes. Start from the homepage 
 
 Use repository Issues for redacted bug reports. Never post credentials, token values, complete OAuth callback URLs or sensitive store data.
 
-### Why does read_products appear in the code?
+### Do I need to enter read_products?
 
-It is the current authorization request scope. Managed installation can affect grants through released and approved configuration. Inspect the result rather than assuming permissions from the request.
+Only if your integration needs that scope and your flow requires explicit scopes. The on-site tool does not add it automatically. Use Advanced permissions to enter the comma-separated scopes configured for your app.
 
 ### Why did copying fail?
 
